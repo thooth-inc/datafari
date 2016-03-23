@@ -35,12 +35,12 @@ all:
 .SECONDARY:
 
 # PostgreSQL version number
-VERSION = 9.3.1
-MAJORVERSION = 9.3
+VERSION = 9.4
+MAJORVERSION = 9.4
 
 # Support for VPATH builds
 vpath_build = no
-abs_top_srcdir = /home/postgres/postgresql-9.3.1
+abs_top_srcdir = /home/postgres/postgresql-9.4
 
 ifneq ($(vpath_build),yes)
 top_srcdir = $(top_builddir)
