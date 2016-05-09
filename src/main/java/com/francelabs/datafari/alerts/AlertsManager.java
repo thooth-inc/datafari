@@ -53,6 +53,7 @@ import com.francelabs.datafari.service.db.AlertDataService;
 import com.francelabs.datafari.service.search.SolrServers;
 import com.francelabs.datafari.service.search.SolrServers.Core;
 import com.francelabs.datafari.utils.AlertsConfiguration;
+import com.francelabs.datafari.utils.SolrConfiguration;
 
 public class AlertsManager {
 	private static AlertsManager INSTANCE = new AlertsManager();
@@ -273,7 +274,7 @@ public class AlertsManager {
 															// in the database
 						if (alertProp.get("core").toString().toUpperCase().equals("" + core[i].toString().toUpperCase())) {
 							try {
-								solr = SolrServers.getSolrServer(core[i]);
+								solr = SolrServers.getSolrServer(core[i], SolrConfiguration.getProperty(SolrConfiguration.SOLRPROTOCOL));
 							} catch (final IOException e) {
 								LOGGER.error("Error while getting the Solr core in alerts(), AlertsManager. Error 69042 ", e);
 								return;

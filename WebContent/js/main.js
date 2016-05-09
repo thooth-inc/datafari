@@ -10,8 +10,8 @@ $(function($) {
 	window.i18n.setupLanguage('Datafari home page');
 
 	Manager = new AjaxFranceLabs.Manager({
-		serverUrl : 'http://' + window.location.hostname
-				+ ':8080/Datafari/SearchProxy/',
+		serverUrl : window.location.protocol + "//" + window.location.host
+				+ '/Datafari/SearchProxy/',
 		constellio : false,
 		connectionInfo : {
 			autocomplete : {

@@ -97,12 +97,12 @@ SOLR_LOGS_DIR=${DATAFARI_HOME}/logs
 
 # Uncomment to set SSL-related system properties
 # Be sure to update the paths to the correct keystore for your environment
-#SOLR_SSL_KEY_STORE=etc/solr-ssl.keystore.jks
-#SOLR_SSL_KEY_STORE_PASSWORD=secret
-#SOLR_SSL_TRUST_STORE=etc/solr-ssl.keystore.jks
-#SOLR_SSL_TRUST_STORE_PASSWORD=secret
-#SOLR_SSL_NEED_CLIENT_AUTH=false
-#SOLR_SSL_WANT_CLIENT_AUTH=false
+SOLR_SSL_KEY_STORE=${DATAFARI_HOME}/ssl-keystore/datafari-keystore.jks
+SOLR_SSL_KEY_STORE_PASSWORD=DataFariAdmin
+SOLR_SSL_TRUST_STORE=${DATAFARI_HOME}/ssl-keystore/datafari-keystore.jks
+SOLR_SSL_TRUST_STORE_PASSWORD=DataFariAdmin
+SOLR_SSL_NEED_CLIENT_AUTH=false
+SOLR_SSL_WANT_CLIENT_AUTH=false
 
 # Uncomment if you want to override previously defined SSL values for HTTP client
 # otherwise keep them commented and the above values will automatically be set for HTTP clients

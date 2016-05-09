@@ -15,40 +15,37 @@
  *******************************************************************************/
 package com.francelabs.datafari.service.search;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.impl.CloudSolrClient;
 import org.apache.solr.client.solrj.impl.HttpSolrClient;
 
-import org.apache.log4j.Logger;
 import com.francelabs.datafari.alerts.AlertsManager;
 import com.francelabs.datafari.utils.ScriptConfiguration;
+import com.francelabs.datafari.utils.SolrConfiguration;
 
 public class SolrServers {
 
-	private final static Logger LOGGER = Logger.getLogger(AlertsManager.class
-			.getName());
-
-	private static String host = "localhost";
-	private static String solrWebapp = "solr";
-	private static String solrPort = "8983";
-	private static String zookeeperPort = "9080";
+	private final static Logger LOGGER = Logger.getLogger(AlertsManager.class.getName());
 
 	public enum Core {
 		FILESHARE {
+			@Override
 			public String toString() {
 				return "FileShare";
 			}
 		},
 		STATISTICS {
+			@Override
 			public String toString() {
 				return "Statistics";
 			}
 		},
 		PROMOLINK {
+			@Override
 			public String toString() {
 				return "Promolink";
 			}
@@ -57,26 +54,23 @@ public class SolrServers {
 
 	private static Map<Core, SolrClient> solrClients = new HashMap<Core, SolrClient>();
 
-	public static SolrClient getSolrServer(Core core) throws Exception {
+	public static SolrClient getSolrServer(final Core core, final String protocol) throws Exception {
 		if (!solrClients.containsKey(core)) {
 			try {
 				SolrClient solrClient;
 				if (ScriptConfiguration.getProperty("SOLRCLOUD").equals("true")) {
-					solrClient = new CloudSolrClient(host + ":" + zookeeperPort);
-					((CloudSolrClient) solrClient).setDefaultCollection(core
-							.toString());
+					solrClient = new CloudSolrClient(SolrConfiguration.getProperty(SolrConfiguration.SOLRHOST) + ":"
+							+ SolrConfiguration.getProperty(SolrConfiguration.ZOOKEEPERPORT));
+					((CloudSolrClient) solrClient).setDefaultCollection(core.toString());
 				} else {
-					solrClient = new HttpSolrClient("http://" + host + ":"
-							+ solrPort + "/" + solrWebapp + "/"
-							+ core.toString());
+					solrClient = new HttpSolrClient(protocol + "//" + SolrConfiguration.getProperty(SolrConfiguration.SOLRHOST) + ":"
+							+ SolrConfiguration.getProperty(SolrConfiguration.SOLRPORT) + "/"
+							+ SolrConfiguration.getProperty(SolrConfiguration.SOLRWEBAPP) + "/" + core.toString());
 				}
 				solrClients.put(core, solrClient);
-			} catch (Exception e) {
-				LOGGER.error("Cannot instanciate Solr Client for core : "
-						+ core.toString(), e);
-				throw new Exception(
-						"Cannot instanciate Solr Client for core : "
-								+ core.toString());
+			} catch (final Exception e) {
+				LOGGER.error("Cannot instanciate Solr Client for core : " + core.toString(), e);
+				throw new Exception("Cannot instanciate Solr Client for core : " + core.toString());
 			}
 		}
 		return solrClients.get(core);

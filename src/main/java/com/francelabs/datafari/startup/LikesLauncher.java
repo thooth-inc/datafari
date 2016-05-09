@@ -4,7 +4,7 @@
  *  * Licensed under the Apache License, Version 2.0 (the "License");
  *  * you may not use this file except in compliance with the License.
  *  * You may obtain a copy of the License at
- *  * 
+ *  *
  *  *      http://www.apache.org/licenses/LICENSE-2.0
  *  *
  *  * Unless required by applicable law or agreed to in writing, software
@@ -33,32 +33,31 @@ import com.francelabs.datafari.service.search.SolrServers;
 import com.francelabs.datafari.service.search.SolrServers.Core;
 import com.francelabs.datafari.servlets.admin.StringsDatafariProperties;
 import com.francelabs.datafari.utils.ScriptConfiguration;
+import com.francelabs.datafari.utils.SolrConfiguration;
 import com.francelabs.datafari.utils.UpdateNbLikes;
 
 public class LikesLauncher implements ServletContextListener {
 
 	private static boolean islaunched = false;
 	private static ScheduledExecutorService scheduler;
-	private static Logger LOGGER = Logger.getLogger(LikesLauncher.class
-			.getName());
+	private static Logger LOGGER = Logger.getLogger(LikesLauncher.class.getName());
 	private static ScheduledFuture<?> handler;
 	private static boolean doReload = false;
 	private static boolean isThreadUpdateNbLikesStarted = false;
 
 	@Override
-	public void contextInitialized(ServletContextEvent arg0) {
+	public void contextInitialized(final ServletContextEvent arg0) {
 
 		String isEnabled = null;
 		try {
-			isEnabled = ScriptConfiguration
-					.getProperty(StringsDatafariProperties.LIKESANDFAVORTES);
-		} catch (IOException e) {
+			isEnabled = ScriptConfiguration.getProperty(StringsDatafariProperties.LIKESANDFAVORTES);
+		} catch (final IOException e) {
 			LOGGER.error(e);
 		}
 		try {
-			File externalFile = UpdateNbLikes.getInstance().getConfigFile();
+			final File externalFile = UpdateNbLikes.getInstance().getConfigFile();
 			externalFile.createNewFile();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 		}
 		if (isEnabled != null && isEnabled.equals("true")) {
@@ -69,7 +68,7 @@ public class LikesLauncher implements ServletContextListener {
 	}
 
 	@Override
-	public void contextDestroyed(ServletContextEvent arg0) {
+	public void contextDestroyed(final ServletContextEvent arg0) {
 		LikesLauncher.shutDown();
 	}
 
@@ -77,14 +76,15 @@ public class LikesLauncher implements ServletContextListener {
 		if (!LikesLauncher.isThreadUpdateNbLikesStarted) {
 			LikesLauncher.isThreadUpdateNbLikesStarted = true;
 			new Thread(new Runnable() {
+				@Override
 				public void run() {
 					try {
-						SolrClient solrClient = SolrServers
-								.getSolrServer(Core.FILESHARE);
-						SolrQuery refreshQuery = new SolrQuery();
+						final SolrClient solrClient = SolrServers.getSolrServer(Core.FILESHARE,
+								SolrConfiguration.getProperty(SolrConfiguration.SOLRPROTOCOL));
+						final SolrQuery refreshQuery = new SolrQuery();
 						refreshQuery.setRequestHandler("/reloadCache");
 						solrClient.query(refreshQuery);
-					} catch (Exception e) {
+					} catch (final Exception e) {
 						LOGGER.error("Cannot send refresh request", e);
 					}
 					LOGGER.info("updateNbLikes finished its work");
@@ -98,8 +98,7 @@ public class LikesLauncher implements ServletContextListener {
 		if (!islaunched) {
 			islaunched = true;
 			scheduler = Executors.newScheduledThreadPool(1);
-			handler = scheduler.scheduleAtFixedRate(reloadCache, 1, 10,
-					TimeUnit.SECONDS);
+			handler = scheduler.scheduleAtFixedRate(reloadCache, 1, 10, TimeUnit.SECONDS);
 		}
 	}
 
@@ -112,13 +111,13 @@ public class LikesLauncher implements ServletContextListener {
 		public void run() {
 			if (LikesLauncher.doReload) {
 				try {
-					SolrClient solrClient = SolrServers
-							.getSolrServer(Core.FILESHARE);
-					SolrQuery refreshQuery = new SolrQuery();
+					final SolrClient solrClient = SolrServers.getSolrServer(Core.FILESHARE,
+							SolrConfiguration.getProperty(SolrConfiguration.SOLRPROTOCOL));
+					final SolrQuery refreshQuery = new SolrQuery();
 					refreshQuery.setRequestHandler("/reloadCache");
 					solrClient.query(refreshQuery);
 					LikesLauncher.doReload = false;
-				} catch (Exception e) {
+				} catch (final Exception e) {
 
 					LOGGER.error("Cannot reload cache", e);
 				}

@@ -80,6 +80,7 @@ public class SearchProxy extends HttpServlet {
 	protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
 
 		final String handler = getHandler(request);
+		final String protocol = request.getScheme() + ":";
 
 		if (!allowedHandlers.contains(handler)) {
 			log("Unauthorized handler");
@@ -128,11 +129,11 @@ public class SearchProxy extends HttpServlet {
 			switch (handler) {
 			case "/stats":
 			case "/statsQuery":
-				solr = SolrServers.getSolrServer(Core.STATISTICS);
+				solr = SolrServers.getSolrServer(Core.STATISTICS, protocol);
 				break;
 			default:
-				solr = SolrServers.getSolrServer(Core.FILESHARE);
-				promolinkCore = SolrServers.getSolrServer(Core.PROMOLINK);
+				solr = SolrServers.getSolrServer(Core.FILESHARE, protocol);
+				promolinkCore = SolrServers.getSolrServer(Core.PROMOLINK, protocol);
 
 				// Add authentication
 				if (request.getUserPrincipal() != null) {
@@ -232,7 +233,7 @@ public class SearchProxy extends HttpServlet {
 					statsParams.add("noHits", "1");
 				}
 				statsParams.add("QTime", Integer.toString(QTime));
-				StatsPusher.pushQuery(statsParams);
+				StatsPusher.pushQuery(statsParams, protocol);
 				break;
 			case "/stats":
 				StatsProcessor.processStatsResponse(queryResponse);
@@ -253,7 +254,7 @@ public class SearchProxy extends HttpServlet {
 
 	private void writeSolrJResponse(final HttpServletRequest request, final HttpServletResponse response, final SolrQuery query,
 			final QueryResponse queryResponse, final SolrQuery queryBis, final QueryResponse queryResponseBis)
-					throws IOException, JSONException, ParseException {
+			throws IOException, JSONException, ParseException {
 		final SolrQueryRequest req = new SolrQueryRequest() {
 			@Override
 			public SolrParams getParams() {
@@ -461,7 +462,7 @@ public class SearchProxy extends HttpServlet {
 			response.setHeader("Content-Type", "application/json;charset=UTF-8 ");
 			response.getWriter().write(finalString); // Send the answer to the
 														// jsp page
-			
+
 		} else {
 			final SolrQueryResponse res = new SolrQueryResponse();
 			final JSONResponseWriter json = new JSONResponseWriter();
@@ -471,7 +472,7 @@ public class SearchProxy extends HttpServlet {
 			response.setHeader("Content-Type", "application/json;charset=UTF-8 ");
 			res.setAllValues(queryResponse.getResponse());
 			json.write(response.getWriter(), req, res);
-			
+
 		}
 	}
 

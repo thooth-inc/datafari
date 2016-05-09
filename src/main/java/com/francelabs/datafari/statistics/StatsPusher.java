@@ -42,10 +42,10 @@ public class StatsPusher {
 
 	private final static Logger LOGGER = Logger.getLogger(StatsPusher.class.getName());
 
-	public static void pushDocument(final ModifiableSolrParams params) {
+	public static void pushDocument(final ModifiableSolrParams params, final String protocol) {
 		try {
 
-			final SolrClient solrServer = SolrServers.getSolrServer(Core.STATISTICS);
+			final SolrClient solrServer = SolrServers.getSolrServer(Core.STATISTICS, protocol);
 
 			final Map<String, Integer> increment = new HashMap<String, Integer>();
 			increment.put("inc", 1);
@@ -100,10 +100,10 @@ public class StatsPusher {
 		}
 	}
 
-	public static void pushQuery(final ModifiableSolrParams params) {
+	public static void pushQuery(final ModifiableSolrParams params, final String protocol) {
 		try {
 
-			final SolrClient solrServer = SolrServers.getSolrServer(Core.STATISTICS);
+			final SolrClient solrServer = SolrServers.getSolrServer(Core.STATISTICS, protocol);
 
 			final SolrQuery query = new SolrQuery();
 			query.setRequestHandler("/get");

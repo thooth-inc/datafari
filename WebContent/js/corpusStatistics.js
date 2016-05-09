@@ -5,8 +5,8 @@ $(document).ready(function() {
 			if(!kibanaURI.endsWith("/")) {
 				kibanaURI += "/";
 			}
-			if(!kibanaURI.startsWith("http://")) {
-				kibanaURI = "http://" + kibanaURI;
+			if(!kibanaURI.startsWith(window.location.protocol)) {
+				kibanaURI = window.location.protocol + "//" + kibanaURI;
 			}
 			$('#iFrameContent').attr('src', kibanaURI + "#/dashboard/Content-Analysis");
 			$('#warning').hide();

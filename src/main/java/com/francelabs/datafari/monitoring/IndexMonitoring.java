@@ -25,6 +25,7 @@ import org.apache.solr.common.SolrDocumentList;
 import com.francelabs.datafari.logs.MonitoringLevel;
 import com.francelabs.datafari.service.search.SolrServers;
 import com.francelabs.datafari.service.search.SolrServers.Core;
+import com.francelabs.datafari.utils.SolrConfiguration;
 
 /**
  * Starts monitoring events which occurs at a fixed rate (once an hour by
@@ -184,7 +185,8 @@ public class IndexMonitoring {
 				final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZZ");
 				final String currentDate = df.format(new Date());
 				String log = "";
-				final SolrClient solrServer = SolrServers.getSolrServer(Core.FILESHARE);
+				final SolrClient solrServer = SolrServers.getSolrServer(Core.FILESHARE,
+						SolrConfiguration.getProperty(SolrConfiguration.SOLRPROTOCOL));
 				final SolrQuery query = new SolrQuery();
 				query.setQuery("*:*");
 				// Add specified facet fields
