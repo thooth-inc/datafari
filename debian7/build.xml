@@ -11,6 +11,7 @@
 	</condition>
 
 	<!-- Source directories -->
+	<property name="ssl.src.dir" value="${project.dir}/ssl-keystore" />
 	<property name="elk.src.dir" value="${project.dir}/elk" />
 	<property name="datafari.elk.dir" value="${project.dir}/datafari-elk" />
 	<property name="datafari.solr.dir" value="${project.dir}/datafari-solr" />
@@ -104,6 +105,11 @@
 				<!-- Exclude already existing data & logs (i.e. coming from dev environment) -->
 				<exclude name="elasticsearch/data/**" />
 				<exclude name="**/logs/**" />
+			</fileset>
+		</copy>
+		
+		<copy todir="${debian.dist.dir}/ssl-keystore">
+			<fileset dir="${ssl.src.dir}">
 			</fileset>
 		</copy>
 		

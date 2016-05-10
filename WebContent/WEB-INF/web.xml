@@ -26,6 +26,18 @@
     <param-name>file-upload</param-name>
     <param-value>../../solr/solr_home/FileShare/conf/</param-value>
   </context-param>
+  
+  <security-constraint>
+    <web-resource-collection>
+        <web-resource-name>Datafari</web-resource-name>
+        <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+
+    <user-data-constraint>
+        <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+</security-constraint>
+  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Admin</web-resource-name>

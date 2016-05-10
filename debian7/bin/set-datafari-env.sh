@@ -8,6 +8,7 @@
 export DATAFARI_HOME=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
 export PATH=${PATH}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export JAVA_HOME=${DATAFARI_HOME}/jvm
+export JAVA_OPTS="${JAVA_OPTS} -Djavax.net.ssl.trustStore=${DATAFARI_HOME}/ssl-keystore/datafari-keystore.jks -Djavax.net.ssl.trustStorePassword=DataFariAdmin"
 
 echo $JAVA_HOME
 

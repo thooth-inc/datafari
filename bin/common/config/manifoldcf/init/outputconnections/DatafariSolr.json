@@ -15,7 +15,7 @@
                   "_attribute_name":"Solr type"
                },
                {  
-                  "_value_":"http",
+                  "_value_":"https",
                   "_attribute_name":"Server protocol"
                },
                {  
@@ -125,7 +125,11 @@
                {  
                   "_value_":"",
                   "_attribute_name":"Commit within"
-               }
+               },
+			   {
+				"_value_": "/u3+7QAAAAIAAAABAAAAAgANMTQ2Mjg5MDg5Mzk4NwAAAVSbGCeMAAVYLjUwOQAAA3UwggNxMIICWaADAgECAgQc2sqwMA0GCSqGSIb3DQEBCwUAMGkxCzAJBgNVBAYTAnBhMQ0wCwYDVQQIEwRwYWNhMQ0wCwYDVQQHEwRuaWNlMRMwEQYDVQQKEwpmcmFuY2VsYWJzMRMwEQYDVQQLEwpmcmFuY2VsYWJzMRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMTYwNTA0MTQ1ODU1WhcNMTYwODAyMTQ1ODU1WjBpMQswCQYDVQQGEwJwYTENMAsGA1UECBMEcGFjYTENMAsGA1UEBxMEbmljZTETMBEGA1UEChMKZnJhbmNlbGFiczETMBEGA1UECxMKZnJhbmNlbGFiczESMBAGA1UEAxMJbG9jYWxob3N0MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyq8fmYadjgvjpWMOcvD0OrwsiN55IHYKeO6mCzuEEL0wYX4IrGZRx81dIbJHGMPcvzYL0mOhb6JF4qNNgnEdbxTunDOg7dKJk43mf2ohnYCQ5+a/OoQ7oC3Sz033MKUSpmsBFtoI1VeuL3wJNw4hC88In61dHWInWSXSyvcqwdotDAbIvMad2QPx/14gRRJiQmoegCh58v2r3eoEMb7wrOSVXYCTgLmKGIkiiRMZ8QvyCjUPneu2hIqxZLAf51Y/amuc5m4IPCMcGTVC2r4kgyW2kX8M/FxKaAaG1yBoGw7PdffIv4bs+4ProglTDbUzU4fCGdW8nLQPjfhcOsjeLwIDAQABoyEwHzAdBgNVHQ4EFgQULQTzn13qBy27UT6CQsBL4SbUaqcwDQYJKoZIhvcNAQELBQADggEBAEMxaqMDFKMdTLc6UNTVtF2ZPIpW8gdURbbA3UF+IYby4n23DY8xn42Q+dQ9uZmmoeCLGtyfEsAEhWnSuMaj+eJo/oy7MoBoi3OKA3GCIptKPiaffnUQhpVnvtHyDFtvIjvHsFk+T0a6ugnqRFZhKvvh01/vtWMy9X4K5wD1+j50qO6DjmjqFEu+ywCJnIYj/2YN6FrXD6BJnBNYk6S7dcnRwmBlEYor3kIwsb30SSqa2uaw6eLeCCOVL+B9Prww9KB9nK1V5DOxOJTRGahVYnQcaE6W6lLMGbYNgbzBIst5AGzA6kEf7aPYmgajQTflku/4EKANNo1ON1LaUnHlVEZ4CTrOcziLMsqMtUIeA0kCm43t3Q==",
+				"_attribute_name": "Keystore"
+			   }
             ]
          },
          "class_name":"org.apache.manifoldcf.agents.output.solr.SolrConnector",
